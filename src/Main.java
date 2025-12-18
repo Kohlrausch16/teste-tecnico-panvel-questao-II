@@ -18,7 +18,9 @@ public class Main {
 
             System.out.println("\nInforme o número referente à opção desejada: ");
             System.out.println("1 - Adicionar tarefa");
+            System.out.println("2 - Remover tarefa");
             System.out.println("3 - Listar tarefas");
+            System.out.println("4 - Definir tarefa como concluída");
             System.out.println("5 - Total de tarefas");
             System.out.println("0 - Encerrar programa");
             System.out.print("Opção: ");
@@ -30,7 +32,9 @@ public class Main {
             switch (opcaoMenu){
                 case 0 -> continuar = false;
                 case 1 -> adicionarTarefaMenu();
+                case 2 -> removerTarefa();
                 case 3 -> listaTarefas.listar();
+                case 4 -> marcarConcluida();
                 case 5 -> listaTarefas.total();
             }
         }
@@ -49,8 +53,15 @@ public class Main {
         System.out.print("Descrição da tarefa: ");
         String descricao = sc.nextLine();
 
-        System.out.print("Status da tarefa (PENDENTE/EM_ANDAMENTO): ");
-        String statusDigitado = sc.nextLine().toUpperCase();
+
+        // Inicializa a variável auxiliar
+        String statusDigitado = "";
+
+        // Enquanto o status informado for diferente de PENDNETE e EM_ANDAMENTO
+        while(!statusDigitado.equals("PENDENTE") && !statusDigitado.equals("EM_ANDAMENTO")){
+            System.out.print("Status da tarefa (PENDENTE/EM_ANDAMENTO): ");
+            statusDigitado = sc.nextLine().toUpperCase();
+        }
         StatusTarefa status = StatusTarefa.valueOf(statusDigitado);
 
         System.out.print("Data da tarefa: ");
@@ -61,5 +72,17 @@ public class Main {
 
         // Adiciona a tarefa à lista
         listaTarefas.adicionar(tarefa);
+    }
+
+    public static void removerTarefa(){
+        System.out.print("\nId da tarefa: ");
+        String id = sc.nextLine();
+        listaTarefas.remover(id);
+    }
+
+    public static void marcarConcluida(){
+        System.out.print("\nId da tarefa: ");
+        String id = sc.nextLine();
+        listaTarefas.marcarConcluida(id);
     }
 }
